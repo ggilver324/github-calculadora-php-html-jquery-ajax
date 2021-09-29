@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora PHP</title>
+    <link rel="stylesheet" tipe="text/css" href="bootstrap-5.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" tipe="text/css" href="bootstrap-5.1.1/css/bootstrap-theme.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="bootstrap-5.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-5.1.1/css/estilos.css">
+    <style>
+        div#cuerpo{
+            margin: auto;
+            width: 270px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        #table{
+            text-align: center;
+        }
+		.cabecera {
+			overflow: hidden;
+			background: #dddddd;
+		}
+
+	   .cabecera img{
+			width: 10%;
+			height: 10%;
+			display: block;
+			margin: auto;
+			padding: 5px;
+	    }
+
+		.cabecera h1{
+			text-align: center;
+			font-size: 28px;
+			color: #F69F2C;
+		}
+
+		.cabecera h3{
+			text-align: center;
+			font-size: 28px;
+			color: dodgerblue;
+		}
+    </style>
+    <script>
+        function reset(){
+            edt = document.getElementById("inputResultado");
+            edt.value = "";
+        }
+        function quitarItem(){
+            edt = document.getElementById("inputResultado");
+            valorViejo = edt.value;
+            valorNuevo = valorViejo.slice(0, (valorViejo.length-1));
+            edt.value = valorNuevo;
+        }
+        function agregarItem(item){
+            edt = document.getElementById("inputResultado");
+            valorViejo = edt.value;
+            valorNuevo = valorViejo + item;
+            edt.value = valorNuevo;
+        }
+        function raiz(){
+            edt = document.getElementById("inputResultado");
+            valor = edt.value;
+            
+            $.ajax({
+                url:'server.php',
+                method:'post',
+                data:{'raiz':valor}
+            }).done(function(respuesta){
+                edt.value = respuesta;
+            });
+        }
+        function calcular(){
+            edt = document.getElementById("inputResultado");
+            valor = edt.value;
+            
+            $.ajax({
+                url:'server.php',
+                method:'post',
+                data:{'calculo':valor}
+            }).done(function(resultado){
+                //alert("El resultado es: "+ resultado);
+                edt.value = resultado;
+            });
+        }
+
+
+
+    </script>
+</head>
+<body>
+		<header class="cabecera">
+			<img src="img/logo.jpg">
+			<h1>Calculadora</h1>
+			<h3>El conocimiento es poder</h3>
+		</header>
+   
+        <div id="cuerpo" class="">
+            <table id="table" class="table table-bordered table-hover">
+                <tr>
+                    <td colspan="4"><input type="text" class="form-control" id="inputResultado"></td>
+                </tr>
+              
+                <tr>
+                    <td><button typo="button" onclick="quitarItem();" class="btn btn-primary"><--</button></td>
+                    <td><button typo="button" onclick="reset();" class="btn btn-primary">CE</button></td>
+                    <td><button typo="button" onclick="reset();" class="btn btn-primary">C</button></td>
+                    <td><button typo="button" onclick="agregarItem('/');" class="btn btn-primary">/</button></td>
+                </tr>
+                <tr>
+                    <td><button typo="button" onclick="agregarItem(7);" class="btn btn-primary">7</button></td>
+                    <td><button typo="button" onclick="agregarItem(8);" class="btn btn-primary">8</button></td>
+                    <td><button typo="button" onclick="agregarItem(9);" class="btn btn-primary">9</button></td>
+                    <td><button typo="button" onclick="agregarItem('*');" class="btn btn-primary">*</button></td>
+                </tr>
+                <tr>
+                    <td><button typo="button" onclick="agregarItem(4);" class="btn btn-primary">4</button></td>
+                    <td><button typo="button" onclick="agregarItem(5);" class="btn btn-primary">5</button></td>
+                    <td><button typo="button" onclick="agregarItem(6);" class="btn btn-primary">6</button></td>
+                    <td><button typo="button" onclick="agregarItem('+');" class="btn btn-primary">+</button></td>
+                </tr>
+                <tr>
+                    <td><button typo="button" onclick="agregarItem(1);" class="btn btn-primary">1</button></td>
+                    <td><button typo="button" onclick="agregarItem(2);" class="btn btn-primary">2</button></td>
+                    <td><button typo="button" onclick="agregarItem(3);" class="btn btn-primary">3</button></td>
+                    <td><button typo="button" onclick="agregarItem('-');" class="btn btn-primary">-</button></td>
+                </tr>
+                <tr>
+                    <td><button typo="button" onclick="agregarItem(0);" class="btn btn-primary">0</button></td>
+                    <td><button typo="button" onclick="agregarItem('.');" class="btn btn-primary">.</button></td>
+                    <td><button typo="button" onclick="raiz();" class="btn btn-primary">Raiz</button></td>
+                    <td><button typo="button" onclick="calcular();" class="btn btn-primary">=</button></td>
+                </tr>
+
+            </table>
+
+        </div>
+        
+        
+    
+    
+    <script src="main.js"></script>
+</body>
+</html>
